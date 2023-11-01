@@ -1,0 +1,238 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TimeasyAPI</name>
+    </assembly>
+    <members>
+        <member name="M:TimeasyAPI.Controllers.CourseController.#ctor(TimeasyAPI.src.Services.Interfaces.ICourseServices,TimeasyAPI.src.Services.Interfaces.ITokenService)">
+            <summary>
+             Construtor da controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.CourseController.GetAllPagedAsync(System.Int32,System.Int32)">
+            <summary>
+             Retorna todos os cursos de forma paginada
+            </summary>
+            <param name="page">Número da página</param>
+            <param name="pageSize">Número de items por página</param>
+            <returns>Uma lista de cursos de forma paginada</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.CourseController.CreateAsync(TimeasyAPI.src.DTOs.Course.Requests.CreateCourseRequest)">
+            <summary>
+            Cria um novo curso no sistema
+            </summary>
+            <param name="request">Informações do novo Curso a ser criado</param>
+            <returns>Curso Criado com seu Id</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.CourseController.CreateAsync(TimeasyAPI.src.DTOs.Course.Requests.UpdateCourseRequest)">
+            <summary>
+            Atualiza um Curso. Removendo todas suas disciplinas e adicionando novamente com base nas disciplinas informadas
+            </summary>
+            <param name="request">Informações do curso a serem alteradas</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.CourseController.DeleteAsync(System.Guid)">
+            <summary>
+            Deleta um curso do sistema
+            </summary>
+            <param name="id">Id do curso a ser deletado</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.CourseController.DeleteCourseSubjectAsync(TimeasyAPI.src.DTOs.Course.Requests.DeleteCourseSubjectsRequest)">
+            <summary>
+            Remove uma disciplina associada a um curso
+            </summary>
+            <param name="courseId">Id do curso</param>
+            <param name="subjectId">Id da disciplina</param>
+            <returns></returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.InstituteController.#ctor(TimeasyAPI.src.Services.Interfaces.IInstituteServices,TimeasyAPI.src.Services.Interfaces.IIntervalServices,TimeasyAPI.src.Services.Interfaces.ITokenService)">
+            <summary>
+             Construtor do controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.InstituteController.Update(TimeasyAPI.src.DTOs.Institute.Request.UpdateInstituteRequest)">
+            <summary>
+            Atualiza a instituição de ensino
+            </summary>
+            <param name="request">Propriedades da instituição a ser atualizada</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.InstituteController.FindById">
+            <summary>
+            Retorna a instituição de ensino com base no usuario logado
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.InstituteController.AddIntervals(TimeasyAPI.src.DTOs.Institute.Request.AddIntervalsRequest)">
+            <summary>
+            Adiciona novos intervalos na instituição de ensino
+            </summary>
+            <param name="request">Propriedades da instituição a ser atualizada</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.InstituteController.RemoveInterval(System.String)">
+            <summary>
+             Deleta o intervalo informado da instituição de ensino
+            </summary>
+            <param name="intervalId">Id do intervalo</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomController.#ctor(TimeasyAPI.src.Services.Interfaces.IRoomServices)">
+            <summary>
+             Construtor do controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomController.CreateRoom(TimeasyAPI.src.DTOs.Room.Request.CreateRoomRequest)">
+            <summary>
+            Cria uma nova sala
+            </summary>
+            <param name="request">Informações da sala a ser criada</param>
+            <returns>Nova sala criada com seu Id</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomController.UpdateRoomAsync(TimeasyAPI.src.DTOs.Room.Request.UpdateRoomRequest)">
+            <summary>
+            Realiza a atualização da sala
+            </summary>
+            <param name="request">Informações da sala a ser atualizada</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomController.GetAllPaged(System.Int32,System.Int32,System.String)">
+            <summary>
+            Retorna todas as salas de forma paginada
+            </summary>
+            <param name="page">Número da página</param>
+            <param name="pageSize">Número de items por página</param>
+            <returns>Uma lista de salas de forma paginada</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomController.RemoveByIdAsync(System.Guid)">
+            <summary>
+             Deleta a sala com base no Id informado
+            </summary>
+            <param name="id">Id da sala</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.#ctor(TimeasyAPI.src.Services.Interfaces.IRoomTypeServices)">
+            <summary>
+             Construtor do controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.CreateAsync(TimeasyAPI.src.DTOs.RoomType.CreateRoomTypeRequest)">
+            <summary>
+            Cria um novo tipo de sala
+            </summary>
+            <param name="request">Informações do novo tipo de sala a ser criado</param>
+            <returns>Novp Tipo de sala criado com seu Id</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.GetAllPagedAsync(System.Int32,System.Int32,System.String)">
+            <summary>
+            Retorna todos os tipos de sala de forma paginada
+            </summary>
+            <param name="page">Número da página</param>
+            <param name="pageSize">Número de items por página</param>
+            <returns>Uma lista de tipo de salas de forma paginada</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.UpdateAsync(TimeasyAPI.src.DTOs.RoomType.UpdateRoomTypeRequest)">
+            <summary>
+            Atualiza o tipo de sala informado
+            </summary>
+            <param name="request">Propriedades a serem atualizadas do tipo da sala</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.DeleteAsync(System.Guid)">
+            <summary>
+            Deleta o tipo de sala 
+            </summary>
+            <param name="id">Id do tipo de sala a ser deletado</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.SubjectController.#ctor(TimeasyAPI.src.Services.Interfaces.ISubjectService)">
+            <summary>
+             Construtor do controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.SubjectController.CreateSubject(TimeasyAPI.src.DTOs.Subject.Requests.CreateSubjectRequest)">
+            <summary>
+            Cria uma nova disciplina
+            </summary>
+            <param name="request">Informações da nova disciplina</param>
+            <returns>Retorna a nova disciplina com seu Id.</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.SubjectController.UpdateSubjectAsync(TimeasyAPI.src.DTOs.Subject.Requests.UpdateSubjectRequest)">
+            <summary>
+             Atualiza a disciplina informada
+            </summary>
+            <param name="request">Informações da disciplina a serem atualizadas</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.SubjectController.GetAllPaged(System.Int32,System.Int32)">
+            <summary>
+            Retorna todas as disciplinas paginadas
+            </summary>
+            <param name="page">Número da página</param>
+            <param name="pageSize">Número de items por página</param>
+            <returns>teste</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.SubjectController.RemoveByIdAsync(System.Guid)">
+            <summary>
+            Deleta uma disciplina com base no Id
+            </summary>
+            <param name="id">Id da disciplina</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.TeacherController.GetAllAsync(System.Int32,System.Int32,System.String)">
+            <summary>
+            Retorna todos os professores de forma paginada.
+            </summary>
+            <param name="page">Número da página</param>
+            <param name="pageSize">Número de items por página</param>
+            <param name="name">Nome do professor que deseja buscar</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.TeacherController.CreateAsync(TimeasyAPI.src.DTOs.Teacher.Requests.CreateTeacherRequest)">
+            <summary>
+            Cria um novo professor no sistema
+            </summary>
+            <param name="request">Informações do professor</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.TeacherController.UpdateAsync(TimeasyAPI.src.DTOs.Teacher.Requests.UpdateTeacherRequest)">
+            <summary>
+            Atualiza o professor com base nas informações informadas
+            </summary>
+            <param name="request">Informações a serem atualizadas</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.TeacherController.DeleteAsync(System.Guid)">
+            <summary>
+             Deleta um professor com base em seu Id
+            </summary>
+            <param name="id">Id do professor</param>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.TimetableController.RemoveSubjectFromTimetable(System.Guid,System.Guid,System.Guid)">
+            <summary>
+            Deleta uma disciplina associada a um curso 
+            </summary>
+            <param name="timetableId"></param>
+            <param name="subjectId"></param>
+            <param name="courseId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.UserController.#ctor(TimeasyAPI.src.Services.Interfaces.IUserServices)">
+            <summary>
+             Construtor do controller
+            </summary>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.UserController.Auth(TimeasyAPI.src.DTOs.User.Requests.AuthRequest)">
+            <summary>
+             Realiza a autenticação do usuário
+            </summary>
+            <param name="request">Email e senha do usuário</param>
+            <returns>Usuário com suas informações e Token de acesso</returns>
+        </member>
+        <member name="M:TimeasyAPI.Controllers.UserController.Create(TimeasyAPI.src.DTOs.User.CreateUserRequest)">
+            <summary>
+            Cria o usuário root (administrador) da aplicação, assim como, uma instituição de ensino.
+            </summary>
+            <param name="request"></param>
+            <returns>Informações do novo usuário e instituição criados</returns>
+        </member>
+        <member name="T:TimeasyAPI.src.Data.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:TimeasyAPI.src.Data.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TimeasyAPI.src.Data.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TimeasyAPI.src.Data.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

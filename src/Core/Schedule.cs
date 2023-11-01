@@ -4,24 +4,47 @@ namespace TimeasyCore.src.Core
 {
     public class Schedule
     {
+        private readonly double CLASS_DURATION_IN_MINUTES = 50;
+
         public Dictionary<DayOfWeek, List<TimeSlot>> ScheduleData { get; }
 
-        public Schedule(List<DayOfWeek> workDays)
+        public Schedule(List<DayOfWeek> workDays, TimeOnly startTime, TimeOnly endTime)
         {
             ScheduleData = new Dictionary<DayOfWeek, List<TimeSlot>>();
-            InitializeDaysOfWeek(workDays);
+            InitializeDaysOfWeek(workDays, startTime, endTime);
         }
 
         /// <summary>
         /// Inicializa o dicionário de dias da semana, com base nos dias de funcionamento da Instituição de Ensino
         /// </summary>
         /// <param name="workDays">Lista de dias de funcionamento da Instituição de Ensino</param>
-        private void InitializeDaysOfWeek(List<DayOfWeek> workDays)
+        private void InitializeDaysOfWeek(List<DayOfWeek> workDays, TimeOnly startTime, TimeOnly endTime)
         {
+
             foreach (DayOfWeek day in workDays)
             {
-                ScheduleData[day] = new List<TimeSlot>();
+                ScheduleData[day] = GenerateTimeSlots(startTime, endTime);
             }
+        }
+
+        private List<TimeSlot> GenerateTimeSlots(TimeOnly startTime, TimeOnly endTime)
+        {
+            List<TimeSlot> timeSlots = new List<TimeSlot>();
+
+            while (startTime.AddMinutes(CLASS_DURATION_IN_MINUTES) < endTime)
+            {
+                var newTimeSlot = new TimeSlot
+                {
+                    StartTime = startTime,
+                    EndTime = startTime.AddMinutes(CLASS_DURATION_IN_MINUTES)
+                };
+
+                timeSlots.Add(newTimeSlot);
+
+                startTime = startTime.AddMinutes(CLASS_DURATION_IN_MINUTES);
+            }
+
+            return timeSlots;
         }
 
         /// <summary>
