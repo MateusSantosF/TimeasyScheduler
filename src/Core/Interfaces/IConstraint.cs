@@ -9,10 +9,6 @@ namespace TimeasyCore.src.Core.Interfaces
 
         ConstraintType Type { get; }
 
-        // If true, is HardConstraint
-        bool Required { get; }
-
-
-
+        bool IsHard { get; }
     }
 }

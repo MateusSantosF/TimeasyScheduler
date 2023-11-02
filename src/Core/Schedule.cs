@@ -1,5 +1,9 @@
 ﻿
 
+using TimeasyCore.src.Models;
+using TimeasyScheduler.src.Constraints;
+using TimeasyScheduler.src.ConstraintsValidators;
+
 namespace TimeasyCore.src.Core
 {
     public class Schedule
@@ -62,6 +66,17 @@ namespace TimeasyCore.src.Core
             }
 
             return false;
+        }
+
+
+        public ValidationResult Validate(Timetable timetable)
+        {
+            var validationChain = new ValidationChain();
+
+            validationChain.AddValidator(new RoomCapacityValidator());
+            validationChain.AddValidator(new RoomTypeValidator());
+
+            return validationChain.ValidateAll(this, timetable);
         }
     }
 }

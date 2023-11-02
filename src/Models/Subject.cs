@@ -1,8 +1,9 @@
 ﻿using TimeasyAPI.src.Models.ValueObjects.Enums;
+using TimeasyScheduler.src.Core.Interfaces;
 
 namespace TimeasyCore.src.Models
 {
-    public class Subject
+    public class Subject 
     {
 
         public Guid Id { get; set; }

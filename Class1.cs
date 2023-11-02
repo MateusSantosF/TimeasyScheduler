@@ -16,7 +16,8 @@ namespace TimeasyCore
             var solutionRequest = MockGenerator.GenarateFakeTimetableConfig(32);
             var bestSolution = CreateInitialRandomSolution(solutionRequest); // # Inicialização aleatória
 
-            Console.Write(bestSolution);
+            var bestCost = bestSolution.Validate(solutionRequest);
+            Console.Write(bestCost);
             Console.Read();
 
         }
@@ -28,7 +29,7 @@ namespace TimeasyCore
             var solutionRequest = MockGenerator.GenarateFakeTimetableConfig(seed);
 
             var bestSolution = CreateInitialRandomSolution(solutionRequest); // # Inicialização aleatória
-            //MelhorCusto ← CalcularCusto(MelhorSolução) # Avalie a solução inicial
+            var bestCost = bestSolution.Validate(solutionRequest); // # Avalie a solução inicial
 
             //Para i de 1 a iterações:
             //    SoluçãoCorrente ← ConstruirSoluçãoGulosaAleatória() # Construa uma solução parcial
@@ -41,7 +42,7 @@ namespace TimeasyCore
             //Retorne MelhorSolução, MelhorCusto
         }
 
-        public static Schedule CreateInitialRandomSolution(src.Models.Timetable solutionRequest)
+        public static Schedule CreateInitialRandomSolution(Timetable solutionRequest)
         {
             var random = new Random();
             var emptyInitialSolution = new Schedule(solutionRequest.Institute.GetOpenDays(), solutionRequest.Institute.OpenHour, solutionRequest.Institute.CloseHour);
@@ -56,14 +57,14 @@ namespace TimeasyCore
                 Console.WriteLine($"{day}");
             }
 
-            Console.WriteLine("\n=============\n");
+            Console.WriteLine("\n======================\n");
 
 
             var scheduleData = emptyInitialSolution.ScheduleData;
 
-            List<Subject> remainingSubjects = new List<Subject>(solutionRequest.Courses.SelectMany(c => c.Subjects).ToList());
-            List<Teacher> availableTeachers = new List<Teacher>(solutionRequest.Teachers);
-            List<Room> availableRooms = new List<Room>(solutionRequest.Rooms);
+            var remainingSubjects = new List<Subject>(solutionRequest.Courses.SelectMany(c => c.Subjects).ToList());
+            var availableTeachers = new List<Teacher>(solutionRequest.Teachers);
+            var availableRooms = new List<Room>(solutionRequest.Rooms);
 
             Console.WriteLine($"Total Subjects => {remainingSubjects.Count}");
             Console.WriteLine($"Total Teachers => {availableTeachers.Count}");
@@ -96,7 +97,6 @@ namespace TimeasyCore
                             return emptyInitialSolution;
                         }
 
-                        // Escolhe aleatoriamente as entidades
                         int subjectIndex = random.Next(remainingSubjects.Count);
                         int teacherIndex = random.Next(availableTeachers.Count);
                         int roomIndex = random.Next(availableRooms.Count);

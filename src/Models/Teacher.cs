@@ -1,4 +1,6 @@
-﻿namespace TimeasyCore.src.Models
+﻿using TimeasyScheduler.src.Core.Interfaces;
+
+namespace TimeasyCore.src.Models
 {
     public class Teacher
     {
