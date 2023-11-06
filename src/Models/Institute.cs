@@ -11,6 +11,7 @@
         public bool Thursday { get; set; }
         public bool Friday { get; set; }
         public bool Saturday { get; set; }
+        public bool Sunday { get; set; }
 
         public List<Interval> Intervals { get; set; }
 
@@ -28,6 +29,8 @@
             if (Thursday) openDays.Add(DayOfWeek.Thursday);
             if (Friday) openDays.Add(DayOfWeek.Friday);
             if (Saturday) openDays.Add(DayOfWeek.Saturday);
+            if (Sunday) openDays.Add(DayOfWeek.Sunday);
+
 
             return openDays;
         }

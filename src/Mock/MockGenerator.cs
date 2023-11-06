@@ -19,14 +19,13 @@ namespace TimeasyCore.src.Mock
             };
 
             List<Course> courses = GenerateCourses(10, random);
-            List<Room> rooms = GenerateRooms(roomsType, 10, random);
-            List<Subject> subjects = GetSubjects(courses, 5, random);
-            List<Teacher> teachers = GetTeachers(subjects, 10, random);
+            List<Room> rooms = GenerateRooms(roomsType, 34, random);
+            List<Subject> subjects = GetSubjects(courses, 10, random);
+            List<Teacher> teachers = GetTeachers(subjects, 20, random);
 
             timetable.Institute = GenerateInstitute(random);
             timetable.Courses.AddRange(courses);
             timetable.Rooms.AddRange(rooms);
-            timetable.Courses.AddRange(courses);
             timetable.Teachers.AddRange(teachers);
 
 
@@ -75,12 +74,12 @@ namespace TimeasyCore.src.Mock
                 Id = Guid.NewGuid(),
                 OpenHour = new TimeOnly(07, 00),
                 CloseHour = new TimeOnly(19, 00),
-                Monday = random.Next(2) == 0,
-                Tuesday = random.Next(2) == 0,
-                Wednesday = random.Next(2) == 0,
-                Thursday = random.Next(2) == 0,
-                Friday = random.Next(2) == 0,
-                Saturday = random.Next(2) == 0,
+                Monday = true,
+                Tuesday = true,
+                Wednesday = true,
+                Thursday = true,
+                Friday = true,
+                Saturday = false,
                 Intervals = GenerateRandomInterval(random)
             };
 
@@ -148,12 +147,13 @@ namespace TimeasyCore.src.Mock
                 {
                     Subject subject = new Subject
                     {
+                        Name = getRandomSubjectName(random),
                         Id = Guid.NewGuid(),
                         CourseId = course.Id, 
                         RoomTypeId = Guid.NewGuid(),
                         Complexity = (SubjectComplexity)(i % 3 + 1),
                         WeeklyClassCount = i,
-                        StudentsCount = i * 10
+                        StudentsCount = random.Next(20, 40) + 1
                     };
 
                     subjects.Add(subject);
@@ -174,6 +174,7 @@ namespace TimeasyCore.src.Mock
                 Course course = new Course
                 {
                     Id = Guid.NewGuid(),
+                    Name = getRandomCourseName(random),
                     Turn = (Turn)random.Next(3),
                     Monday = true,
                     Tuesday = true,
@@ -188,6 +189,66 @@ namespace TimeasyCore.src.Mock
             }
 
             return courses;
+        }
+
+        static string getRandomSubjectName(Random random)
+        {
+            List<string> subjectNames = new List<string>
+            {
+               "Introdução à Programação",
+                "Cálculo I",
+                "Álgebra Linear",
+                "Estrutura de Dados",
+                "Cálculo II",
+                "Lógica de Programação",
+                "Geometria Analítica",
+                "Teoria da Computação",
+                "Cálculo III",
+                "Álgebra Abstrata",
+                "Banco de Dados",
+                "Probabilidade e Estatística",
+                "Física Computacional",
+                "Inteligência Artificial",
+                "Teoria dos Grafos",
+                "Matemática Discreta",
+                "Redes de Computadores",
+                "Programação Orientada a Objetos",
+                "Equações Diferenciais",
+                "Combinatória",
+                "Arquitetura de Computadores",
+                "Sistemas Operacionais",
+                "Análise Numérica",
+                "Álgebra Linear Numérica",
+                "Otimização",
+                "Segurança da Informação",
+                "Sistemas Distribuídos",
+                "Cálculo Numérico",
+                "Teoria da Informação",
+                "Matemática Computacional",
+            };
+
+            return subjectNames[random.Next(subjectNames.Count - 1)];
+
+        }
+
+        static string getRandomCourseName(Random random)
+        {
+            List<string> courseNames = new List<string>
+            {
+               "Bacharelado em Ciência da Computação",
+                "Engenharia de Software",
+                "Engenharia de Computação",
+                "Sistemas de Informação",
+                "Matemática Aplicada",
+                "Ciência de Dados",
+                "Engenharia Elétrica",
+                "Engenharia de Telecomunicações",
+                "Engenharia da Computação e Robótica",
+                "Segurança da Informação",
+            };
+
+            return courseNames[random.Next(courseNames.Count - 1)];
+
         }
     }
 }

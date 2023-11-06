@@ -6,20 +6,37 @@ using TimeasyCore.src.Models;
 
 namespace TimeasyCore
 {
-    public class Class1
+    public class Scheduler
     {
 
         private const int MAX_INTERATION = 70000;
 
         public static void Main(string[] args)
         {
-            var solutionRequest = MockGenerator.GenarateFakeTimetableConfig(32);
+            var solutionRequest = MockGenerator.GenarateFakeTimetableConfig(252525);
             var bestSolution = CreateInitialRandomSolution(solutionRequest); // # Inicialização aleatória
-
             var bestCost = bestSolution.Validate(solutionRequest);
-            Console.Write(bestCost);
-            Console.Read();
 
+            for (int i = 0; i < MAX_INTERATION; i++)
+            {
+                var currentSolution = CreateInitialRandomSolution(solutionRequest);
+                var currentCost = currentSolution.Validate(solutionRequest);
+                if (bestCost.TotalWeight > currentCost.TotalWeight)
+                {
+                    Console.WriteLine($"CurrentSolution Weight: {currentCost.TotalWeight}");
+                    bestSolution = currentSolution;
+                    bestCost = currentCost;
+                }
+
+            }
+         
+            Console.WriteLine("\nFinish process");
+            foreach (var kvp in bestCost.failedValidationMetrics)
+            {
+                Console.WriteLine($"Failed {kvp.Key}: {kvp.Value} times");
+            }
+            Console.Write($"Best solution weigth: {bestCost.TotalWeight}");
+            Console.Read();
         }
 
         public void GenerateSolution()
@@ -46,18 +63,18 @@ namespace TimeasyCore
         {
             var random = new Random();
             var emptyInitialSolution = new Schedule(solutionRequest.Institute.GetOpenDays(), solutionRequest.Institute.OpenHour, solutionRequest.Institute.CloseHour);
-            Console.WriteLine("EmptyInicialSolution generate...\n");
-            Console.WriteLine($"Institute Open {solutionRequest.Institute.OpenHour} and Close {solutionRequest.Institute.CloseHour}");
-            Console.WriteLine($"Total TimeSlots in One Day {emptyInitialSolution.ScheduleData.First().Value.Count}");
+            //Console.WriteLine("EmptyInicialSolution generate...\n");
+            //Console.WriteLine($"Institute Open {solutionRequest.Institute.OpenHour} and Close {solutionRequest.Institute.CloseHour}");
+            //Console.WriteLine($"Total TimeSlots in One Day {emptyInitialSolution.ScheduleData.First().Value.Count}");
 
-            Console.WriteLine("Total available work days => " + emptyInitialSolution.ScheduleData.Keys.Count);
+            //Console.WriteLine("Total available work days => " + emptyInitialSolution.ScheduleData.Keys.Count);
             
-            foreach( DayOfWeek day in emptyInitialSolution.ScheduleData.Keys)
-            {
-                Console.WriteLine($"{day}");
-            }
+            //foreach( DayOfWeek day in emptyInitialSolution.ScheduleData.Keys)
+            //{
+            //    Console.WriteLine($"{day}");
+            //}
 
-            Console.WriteLine("\n======================\n");
+            //Console.WriteLine("\n======================\n");
 
 
             var scheduleData = emptyInitialSolution.ScheduleData;
@@ -65,10 +82,11 @@ namespace TimeasyCore
             var remainingSubjects = new List<Subject>(solutionRequest.Courses.SelectMany(c => c.Subjects).ToList());
             var availableTeachers = new List<Teacher>(solutionRequest.Teachers);
             var availableRooms = new List<Room>(solutionRequest.Rooms);
-
-            Console.WriteLine($"Total Subjects => {remainingSubjects.Count}");
-            Console.WriteLine($"Total Teachers => {availableTeachers.Count}");
-            Console.WriteLine($"Total Rooms => {availableRooms.Count}");
+            
+            //Console.WriteLine($"Total Courses => {solutionRequest.Courses.Count}");
+            //Console.WriteLine($"Total Subjects => {remainingSubjects.Count}");
+            //Console.WriteLine($"Total Teachers => {availableTeachers.Count}");
+            //Console.WriteLine($"Total Rooms => {availableRooms.Count}");
 
 
 
@@ -88,6 +106,7 @@ namespace TimeasyCore
                 {
 
                     var currentDayTimeSlots = scheduleData[day];
+                    Shuffle(currentDayTimeSlots, random);
 
                     foreach (TimeSlot timeSlot in currentDayTimeSlots)
                     {
@@ -105,12 +124,6 @@ namespace TimeasyCore
                         Teacher teacher = availableTeachers[teacherIndex];
                         Room room = availableRooms[roomIndex];
 
-                        TimeOnly startTime = GenerateRandomTime(random, solutionRequest.Institute.OpenHour, solutionRequest.Institute.CloseHour);
-                        TimeOnly endTime = GenerateRandomTime(random, solutionRequest.Institute.OpenHour, solutionRequest.Institute.CloseHour);
-
-
-                        timeSlot.StartTime = startTime;
-                        timeSlot.EndTime = endTime;
                         timeSlot.Name = subject.Name;
                         timeSlot.TeacherID = teacher.Id;
                         timeSlot.SubjectID = subject.Id;
@@ -125,19 +138,19 @@ namespace TimeasyCore
             return emptyInitialSolution;
         }
 
-        private static TimeOnly GenerateRandomTime(Random random, TimeOnly openHour, TimeOnly closeHour)
+        public static void Shuffle<T>(List<T> list, Random random)
         {
-            int openMinutes = openHour.Hour * 60 + openHour.Minute;
-            int closeMinutes = closeHour.Hour * 60 + closeHour.Minute;
-
-            int randomMinutes = random.Next(closeMinutes - openMinutes);
-            int randomTimeMinutes = openMinutes + randomMinutes;
-
-            int randomHours = randomTimeMinutes / 60;
-            int randomMinutesPart = randomTimeMinutes % 60;
-
-            return new TimeOnly(randomHours, randomMinutesPart);
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
+
     }
 
 

@@ -3,12 +3,12 @@
 using TimeasyCore.src.Models;
 using TimeasyScheduler.src.Constraints;
 using TimeasyScheduler.src.ConstraintsValidators;
+using TimeasyScheduler.src.Core;
 
 namespace TimeasyCore.src.Core
 {
     public class Schedule
     {
-        private readonly double CLASS_DURATION_IN_MINUTES = 50;
 
         public Dictionary<DayOfWeek, List<TimeSlot>> ScheduleData { get; }
 
@@ -35,17 +35,17 @@ namespace TimeasyCore.src.Core
         {
             List<TimeSlot> timeSlots = new List<TimeSlot>();
 
-            while (startTime.AddMinutes(CLASS_DURATION_IN_MINUTES) < endTime)
+            while (startTime.AddMinutes(Constants.CLASS_DURATION_IN_MINUTES) < endTime)
             {
                 var newTimeSlot = new TimeSlot
                 {
                     StartTime = startTime,
-                    EndTime = startTime.AddMinutes(CLASS_DURATION_IN_MINUTES)
+                    EndTime = startTime.AddMinutes(Constants.CLASS_DURATION_IN_MINUTES)
                 };
 
                 timeSlots.Add(newTimeSlot);
 
-                startTime = startTime.AddMinutes(CLASS_DURATION_IN_MINUTES);
+                startTime = startTime.AddMinutes(Constants.CLASS_DURATION_IN_MINUTES);
             }
 
             return timeSlots;
@@ -69,14 +69,9 @@ namespace TimeasyCore.src.Core
         }
 
 
-        public ValidationResult Validate(Timetable timetable)
+        public ValidationChain Validate(Timetable timetable)
         {
-            var validationChain = new ValidationChain();
-
-            validationChain.AddValidator(new RoomCapacityValidator());
-            validationChain.AddValidator(new RoomTypeValidator());
-
-            return validationChain.ValidateAll(this, timetable);
+            return new ValidationChain().ValidateAll(this, timetable);
         }
     }
 }

@@ -1,14 +1,16 @@
 ﻿
 using TimeasyCore.src.Core;
+using TimeasyCore.src.Models;
 using TimeasyScheduler.src.Constraints;
 
 namespace TimeasyScheduler.src.ConstraintsValidators
 {
     public class RoomTypeValidator : IValidator
     {
-        private int ROOM_CAPACITY_CONSTRAINT_WEIGHT = 2;
+        private int ROOM_TYPE_CONSTRAINT_WEIGHT = 2;
   
-        public ValidationResult Validate(Schedule solution, TimeasyCore.src.Models.Timetable timetable)
+
+        public ValidationResult Validate(Schedule solution, Timetable timetable)
         {
             var result = new ValidationResult();
 
@@ -29,7 +31,8 @@ namespace TimeasyScheduler.src.ConstraintsValidators
                     if (!hasValidType)
                     {
                         result.IsValid = false;
-                        result.TotalWeight += ROOM_CAPACITY_CONSTRAINT_WEIGHT;
+                        result.FailedCount++;
+                        result.TotalWeight += ROOM_TYPE_CONSTRAINT_WEIGHT;
                     }
                 }
             }
