@@ -2,22 +2,22 @@
 using TimeasyCore.src.Core;
 using TimeasyCore.src.Models;
 using TimeasyScheduler.src.Constraints;
+using TimeasyScheduler.src.Models;
 
 namespace TimeasyScheduler.src.ConstraintsValidators
 {
-    public class ValidationChain
+    public class SolutionCost
     {
         private List<IValidator> validators = new List<IValidator>();
 
         public Dictionary<string, int> failedValidationMetrics = new Dictionary<string, int>();
 
-        public int TotalWeight { get; set; }
+        public int TotalWeight { get; set; } = 0;
 
-        public ValidationChain()
+        public SolutionCost()
         {
             AddValidator(new RoomCapacityValidator());
             AddValidator(new RoomTypeValidator());
-            AddValidator(new ScheduleConflictValidator());
             AddValidator(new DailyGapValidator());
             AddValidator(new InstituteIntervalConflictValidator());
         }
@@ -28,7 +28,7 @@ namespace TimeasyScheduler.src.ConstraintsValidators
             failedValidationMetrics.TryAdd(validator.GetType().Name, 0);
         }
 
-        public ValidationChain ValidateAll(Schedule solution, Timetable timetable)
+        public SolutionCost ValidateAll(Schedule solution, CreateTimetableConfig timetable)
         {
             var result = new ValidationResult();
 

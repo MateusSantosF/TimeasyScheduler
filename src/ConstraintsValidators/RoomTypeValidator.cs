@@ -2,21 +2,21 @@
 using TimeasyCore.src.Core;
 using TimeasyCore.src.Models;
 using TimeasyScheduler.src.Constraints;
+using TimeasyScheduler.src.Core;
+using TimeasyScheduler.src.Models;
 
 namespace TimeasyScheduler.src.ConstraintsValidators
 {
     public class RoomTypeValidator : IValidator
     {
-        private int ROOM_TYPE_CONSTRAINT_WEIGHT = 2;
   
-
-        public ValidationResult Validate(Schedule solution, Timetable timetable)
+        public ValidationResult Validate(Schedule solution, CreateTimetableConfig timetable)
         {
             var result = new ValidationResult();
 
             foreach (var kvp in solution.ScheduleData)
             {
-                List<TimeSlot> timeSlots = kvp.Value;
+                List<TimeSlot> timeSlots = kvp.Value.Where(ts => ts.IsAllocated).ToList();
 
                 foreach (var t in timeSlots)
                 {
@@ -32,7 +32,7 @@ namespace TimeasyScheduler.src.ConstraintsValidators
                     {
                         result.IsValid = false;
                         result.FailedCount++;
-                        result.TotalWeight += ROOM_TYPE_CONSTRAINT_WEIGHT;
+                        result.TotalWeight += Constants.ROOM_TYPE_CONSTRAINT_WEIGHT;
                     }
                 }
             }

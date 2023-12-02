@@ -1,9 +1,6 @@
-﻿
-
-using TimeasyCore.src.Models;
-using TimeasyScheduler.src.Constraints;
-using TimeasyScheduler.src.ConstraintsValidators;
+﻿using TimeasyScheduler.src.ConstraintsValidators;
 using TimeasyScheduler.src.Core;
+using TimeasyScheduler.src.Models;
 
 namespace TimeasyCore.src.Core
 {
@@ -12,10 +9,22 @@ namespace TimeasyCore.src.Core
 
         public Dictionary<DayOfWeek, List<TimeSlot>> ScheduleData { get; }
 
-        public Schedule(List<DayOfWeek> workDays, TimeOnly startTime, TimeOnly endTime)
+        public readonly CreateTimetableConfig CreateTimetableConfig;
+
+        public Schedule(List<DayOfWeek> workDays, TimeOnly startTime, TimeOnly endTime, ref CreateTimetableConfig createTimetableConfig)
         {
             ScheduleData = new Dictionary<DayOfWeek, List<TimeSlot>>();
             InitializeDaysOfWeek(workDays, startTime, endTime);
+            CreateTimetableConfig = createTimetableConfig;
+        }
+
+        public Schedule(Schedule original)
+        {
+            // Copia dos dados ScheduleData
+            ScheduleData = original.ScheduleData
+                .ToDictionary(entry => entry.Key, entry => entry.Value.Select(slot => new TimeSlot(slot)).ToList());
+
+            CreateTimetableConfig = original.CreateTimetableConfig;
         }
 
         /// <summary>
@@ -69,9 +78,21 @@ namespace TimeasyCore.src.Core
         }
 
 
-        public ValidationChain Validate(Timetable timetable)
+        public SolutionCost GetCost()
         {
-            return new ValidationChain().ValidateAll(this, timetable);
+            return new SolutionCost().ValidateAll(this, CreateTimetableConfig);
         }
+
+        public List<TimeSlot> GetTimeSlots()
+        {
+            return ScheduleData.Values.SelectMany(timeslot=>timeslot).ToList();
+        }
+
+        public Schedule Clone()
+        {
+            return new Schedule(this);
+        }
+
+
     }
 }

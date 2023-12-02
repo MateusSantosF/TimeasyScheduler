@@ -5,7 +5,6 @@ namespace TimeasyCore.src.Models
     public class Course
     {
         public Guid Id { get; set; }
-
         public string Name { get; set; }
         public Turn Turn { get; set; }
         public bool Monday { get; set; }

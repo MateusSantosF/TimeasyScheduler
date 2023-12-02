@@ -9,12 +9,13 @@
              Construtor da controller
             </summary>
         </member>
-        <member name="M:TimeasyAPI.Controllers.CourseController.GetAllPagedAsync(System.Int32,System.Int32)">
+        <member name="M:TimeasyAPI.Controllers.CourseController.GetAllPagedAsync(System.Int32,System.Int32,System.String)">
             <summary>
              Retorna todos os cursos de forma paginada
             </summary>
             <param name="page">Número da página</param>
             <param name="pageSize">Número de items por página</param>
+            <param name="name">Nome do curso</param>
             <returns>Uma lista de cursos de forma paginada</returns>
         </member>
         <member name="M:TimeasyAPI.Controllers.CourseController.CreateAsync(TimeasyAPI.src.DTOs.Course.Requests.CreateCourseRequest)">
@@ -24,7 +25,7 @@
             <param name="request">Informações do novo Curso a ser criado</param>
             <returns>Curso Criado com seu Id</returns>
         </member>
-        <member name="M:TimeasyAPI.Controllers.CourseController.CreateAsync(TimeasyAPI.src.DTOs.Course.Requests.UpdateCourseRequest)">
+        <member name="M:TimeasyAPI.Controllers.CourseController.UpdateAsync(TimeasyAPI.src.DTOs.Course.Requests.UpdateCourseRequest)">
             <summary>
             Atualiza um Curso. Removendo todas suas disciplinas e adicionando novamente com base nas disciplinas informadas
             </summary>
@@ -124,6 +125,12 @@
             <param name="pageSize">Número de items por página</param>
             <returns>Uma lista de tipo de salas de forma paginada</returns>
         </member>
+        <member name="M:TimeasyAPI.Controllers.RoomTypeController.GetAllAsync">
+            <summary>
+            Retorna todos os tipos de sala
+            </summary>
+            <returns>Uma lista de tipo de salas</returns>
+        </member>
         <member name="M:TimeasyAPI.Controllers.RoomTypeController.UpdateAsync(TimeasyAPI.src.DTOs.RoomType.UpdateRoomTypeRequest)">
             <summary>
             Atualiza o tipo de sala informado
@@ -154,12 +161,13 @@
             </summary>
             <param name="request">Informações da disciplina a serem atualizadas</param>
         </member>
-        <member name="M:TimeasyAPI.Controllers.SubjectController.GetAllPaged(System.Int32,System.Int32)">
+        <member name="M:TimeasyAPI.Controllers.SubjectController.GetAllPaged(System.Int32,System.Int32,System.String)">
             <summary>
             Retorna todas as disciplinas paginadas
             </summary>
             <param name="page">Número da página</param>
             <param name="pageSize">Número de items por página</param>
+            <param name="name">Nome da Disciplina</param>
             <returns>teste</returns>
         </member>
         <member name="M:TimeasyAPI.Controllers.SubjectController.RemoveByIdAsync(System.Guid)">
